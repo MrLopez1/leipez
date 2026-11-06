@@ -273,3 +273,30 @@ details.game summary span{color:var(--muted);font-size:14px}
 #battleRoot .layout.player .a-fleet{grid-area:fleet}
 @media (max-width:900px){#battleRoot .layout.player{grid-template-columns:minmax(0,1fr);grid-template-areas:"side" "plane" "fleet"}}
 @media (max-width:480px){#battleRoot .score .qc{display:none}#battleRoot .score td,#battleRoot .score th{padding:6px 4px}}
+
+/* ---------- Elective sign-up ---------- */
+.el .el-names{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.el .el-name{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;font-weight:700;font-size:16px;text-align:left}
+.el .el-name:hover:not(:disabled){border-color:var(--ink);background:var(--hl);color:var(--hl-ink)}
+.el .el-name:disabled{opacity:.5;font-weight:400}
+.el .el-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.el .el-card{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+.el .el-card h2{font-size:20px}
+.el .el-card.full{border-color:var(--line);background:var(--surface-2)}
+.el .el-card.full h2{color:var(--muted)}
+.el .el-card.admin{border-width:1.5px;border-color:var(--line);justify-content:flex-start}
+.el .el-card .go{align-self:flex-start}
+.el .el-meter{height:10px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.el .el-meter i{display:block;height:100%;background:var(--pen)}
+.el .el-card.full .el-meter i{background:var(--bad)}
+.el .el-left{margin:6px 0 0;font-size:15px}
+.el .el-left b{font-family:var(--display);font-size:20px}
+.el .el-done{align-items:flex-start}
+.el .el-big{font-family:var(--display);font-weight:900;font-stretch:115%;font-size:clamp(30px,6vw,46px);line-height:1.05}
+.el .el-pool{display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
+.el .el-roll{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;font-size:14px}
+.el .el-roll li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.el .el-url{font-size:15px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;word-break:break-all}
+.el .statchips .statchip{min-width:96px}
+.el textarea.text{font-size:15px;font-family:var(--body);resize:vertical}
+.el .seg{flex-wrap:wrap}
