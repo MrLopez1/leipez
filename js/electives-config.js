@@ -28,6 +28,10 @@ export const CLASSES = [
   {
     id: "fashion", name: "Fashion Design", who: "Middle school (4th–6th)",
     pools: { all: { cap: 16, bands: ["ms"] } }
+  },
+  {
+    id: "dance", name: "Honduran Dance and Culture", who: "Middle and high school (4th-11th)",
+    pools: { all: { cap: 16, bands: ["ms", "hs"] } }
   }
 ];
 
