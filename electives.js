@@ -14,12 +14,12 @@ $("#termLabel").textContent = `${TERM_LABEL} electives`;
 
 let uid = null, data = null, grade = null, sid = store.get(KEY) || null, choosing = null, busy = false, screen = "";
 
-if (!configured) showOnly(SCREENS, "e-setup");
+if (!configured) { window.__elReady = true; showOnly(SCREENS, "e-setup"); }
 else onAuthStateChanged(auth, async u => {
   if (!u) { try { await signInAnonymously(auth); } catch (e) { msg("Couldn't connect", "Check the internet connection and reload the page."); } return; }
   if (uid) return;
   uid = u.uid;
-  onValue(r("electives/" + TERM), s => { data = s.val() || {}; render(); }, () => msg("Couldn't load the electives", "Reload the page. If it keeps happening, tell your teacher."));
+  onValue(r("electives/" + TERM), s => { window.__elReady = true; data = s.val() || {}; render(); }, () => { window.__elReady = true; msg("Couldn't load the electives", "Reload the page. If it keeps happening, tell your teacher."); });
 });
 
 function msg(title, text) { show("e-msg"); $("#msgTitle").textContent = title; $("#msgText").textContent = text; }

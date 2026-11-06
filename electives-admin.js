@@ -7,18 +7,25 @@ import { $, esc, normKey, showOnly } from "./ui.js";
 import { TERM, TERM_LABEL, CLASSES, GRADES, bandOf, gradeName, BAND_NAME } from "./electives-config.js";
 
 const VIEWS = ["a-setup", "a-loading", "a-signin", "a-denied", "a-main"];
+const ready = () => { window.__elReady = true; };
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
 const base = "electives/" + TERM;
 const seatKey = n => "s" + String(n).padStart(2, "0");
 let user = null, data = {}, unsub = null;
 $("#termLabel").textContent = `${TERM_LABEL} · term id ${TERM}`;
 $("#studentUrl").textContent = new URL("electives.html", location.href).href;
 
-if (!configured) showOnly(VIEWS, "a-setup");
+if (!configured) { ready(); showOnly(VIEWS, "a-setup"); }
 else onAuthStateChanged(auth, async u => {
   if (unsub) { unsub(); unsub = null; }
-  if (!u || u.isAnonymous) { user = null; $("#whoEmail").textContent = ""; $("#signOutBtn").hidden = true; showOnly(VIEWS, "a-signin"); return; }
+  if (!u || u.isAnonymous) { user = null; $("#whoEmail").textContent = ""; $("#signOutBtn").hidden = true; ready(); showOnly(VIEWS, "a-signin"); return; }
   user = u; $("#whoEmail").textContent = u.email || ""; $("#signOutBtn").hidden = false;
-  try { await get(r("history")); } catch (e) { $("#deniedEmail").textContent = u.email || ""; showOnly(VIEWS, "a-denied"); return; }
+  try { await withTimeout(get(r("history")), 15000); }
+  catch (e) {
+    if (e && e.message === "timeout") { showOnly(VIEWS, "a-loading"); window.__elShow && window.__elShow("Signed in, but the database isn't answering. Check <b>databaseURL</b> in js/config.js: it must match the link at the top of Firebase → Realtime Database → Data."); return; }
+    ready(); $("#deniedEmail").textContent = u.email || ""; showOnly(VIEWS, "a-denied"); return;
+  }
+  ready();
   showOnly(VIEWS, "a-main");
   unsub = onValue(r(base), s => { data = s.val() || {}; render(); });
 });

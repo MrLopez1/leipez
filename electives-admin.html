@@ -68,6 +68,25 @@
     </div>
   </section>
 </div>
+<script>
+/* If the page gets stuck, say why instead of showing "Connecting…" forever. */
+(function () {
+  var box = "a-loading";
+  window.__elShow = function (html) { window.__elShown = true; var el = document.getElementById(box); if (el) { el.hidden = false; el.innerHTML = '<div class="note bad">' + html + '</div>'; } };
+  window.addEventListener("error", function (e) {
+    if (window.__elReady) return;
+    var t = e.target;
+    if (t && t.tagName === "SCRIPT") {
+      __elShow("A file of this page didn't load" + (t.src ? ": <b>" + t.src.split("/").slice(-2).join("/") + "</b>" : "") + ". Check on GitHub that every file from the zip is there, inside the <b>js</b> and <b>css</b> folders, then reload.");
+    } else if (e.message) {
+      __elShow("The page hit an error: <b>" + String(e.message).replace(/</g, "&lt;") + "</b>. This usually means a file on GitHub is an older version. Upload all the files from the latest zip again, then reload.");
+    }
+  }, true);
+  setTimeout(function () {
+    if (!window.__elReady && !window.__elShown) __elShow("Still not loaded after 20 seconds. Check the internet connection and that <b>js/config.js</b> on GitHub has your Firebase settings (including <b>databaseURL</b>), then reload.");
+  }, 20000);
+})();
+</script>
 <script type="module" src="js/electives-admin.js"></script>
 </body>
 </html>
