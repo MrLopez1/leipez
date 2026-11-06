@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Electives · Teacher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap el">
+  <header class="top">
+    <div>
+      <p class="brand">Electives <span class="hl">Teacher</span></p>
+      <p class="sub" id="termLabel"></p>
+    </div>
+    <div class="who-tag"><span id="whoEmail"></span><button class="ghost small" id="signOutBtn" type="button" hidden>Sign out</button></div>
+  </header>
+
+  <section id="a-setup" hidden class="narrow"><div class="note bad">This site isn't connected to Firebase yet (js/config.js).</div></section>
+  <section id="a-loading"><p class="sub">Connecting…</p></section>
+  <section id="a-signin" hidden class="narrow">
+    <div class="panel stack">
+      <h1>Teacher sign-in</h1>
+      <p class="sub">Sign in with a teacher Google account listed in the database rules.</p>
+      <button class="go full" id="googleBtn" type="button">Sign in with Google</button>
+      <div class="err" id="signinErr"></div>
+    </div>
+  </section>
+  <section id="a-denied" hidden class="narrow"><div class="note bad">This Google account (<span id="deniedEmail"></span>) can't manage electives. Sign in with a teacher account.</div></section>
+
+  <section id="a-main" hidden>
+    <div class="stack">
+      <div class="panel stack">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div><span class="label">Sign-ups</span><h2 id="openState"></h2></div>
+          <div class="btns"><button class="go" id="toggleOpen" type="button"></button></div>
+        </div>
+        <div class="statchips" id="stats"></div>
+        <div id="warnings" class="stack" style="gap:8px"></div>
+        <div>
+          <span class="label">Students sign up at</span>
+          <div class="row" style="gap:8px;align-items:center"><code class="el-url" id="studentUrl"></code><button class="ghost small" id="copyUrl" type="button">Copy link</button></div>
+        </div>
+        <div class="btns">
+          <button class="ghost" id="publishBtn" type="button">Publish classes and seats</button>
+          <button class="ghost" id="csvBtn" type="button">Download list (CSV)</button>
+          <span class="sub" id="publishNote"></span>
+        </div>
+      </div>
+
+      <div><h2 style="margin-bottom:10px">Classes</h2><div class="el-grid" id="classAdmin"></div></div>
+
+      <div class="grid2">
+        <div class="panel stack">
+          <div><h2>Haven't chosen yet</h2><p class="sub">You can place a student yourself. Their name disappears from the student page once they're in a class.</p></div>
+          <div id="pending"></div>
+        </div>
+        <div class="panel stack">
+          <div><h2>Student list</h2><p class="sub">Paste one student per line: <b>name, grade</b>. You can copy two columns straight from Excel or Google Sheets.</p></div>
+          <textarea class="text" id="rosterIn" rows="7" placeholder="Ana Martínez, 5&#10;Luis Pérez, 9&#10;Karla Reyes	11"></textarea>
+          <div class="btns"><button class="go" id="addRoster" type="button">Add students</button><span class="sub" id="rosterNote"></span></div>
+          <div class="tbl" id="rosterTbl"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<script type="module" src="js/electives-admin.js"></script>
+</body>
+</html>

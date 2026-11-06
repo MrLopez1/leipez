@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Elective Sign-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap el">
+  <header class="top">
+    <div>
+      <p class="brand">Elective <span class="hl">Sign-up</span></p>
+      <p class="sub" id="termLabel"></p>
+    </div>
+  </header>
+
+  <section id="e-setup" hidden class="narrow"><div class="note bad">This site isn't connected to the database yet (js/config.js).</div></section>
+  <section id="e-loading" class="narrow"><p class="sub">Loading the electives…</p></section>
+  <section id="e-msg" hidden class="narrow"><div class="panel stack"><h1 id="msgTitle"></h1><p class="sub" id="msgText"></p></div></section>
+
+  <!-- step 1: who are you -->
+  <section id="e-who" hidden class="narrow">
+    <div class="panel stack">
+      <div><h1>Choose your elective</h1><p class="sub">First find your name. Each student chooses once, and a class closes when it's full.</p></div>
+      <div><span class="label">Your grade</span><div class="seg" id="gradeSeg"></div></div>
+      <div id="nameWrap" hidden>
+        <label class="label" for="nameFilter">Your name</label>
+        <input class="text" id="nameFilter" autocomplete="off" placeholder="Type to search" style="max-width:360px">
+        <div class="el-names" id="nameList"></div>
+      </div>
+      <p class="sub">Can't find your name? Tell your teacher.</p>
+    </div>
+  </section>
+
+  <!-- step 2: pick a class -->
+  <section id="e-pick" hidden>
+    <div class="stack">
+      <div class="row" style="justify-content:space-between;align-items:center">
+        <div><h1>Hi, <span id="pickName"></span></h1><p class="sub" id="pickSub"></p></div>
+        <button class="ghost small" id="notMe" type="button">Not you? Go back</button>
+      </div>
+      <div class="el-grid" id="classList"></div>
+    </div>
+  </section>
+
+  <!-- step 3: confirm -->
+  <section id="e-confirm" hidden class="narrow">
+    <div class="panel stack">
+      <span class="label">Check before you confirm</span>
+      <h1 id="confClass"></h1>
+      <p style="margin:0" id="confWho"></p>
+      <div class="note">You can choose only once. To change later, you'll have to ask your teacher.</div>
+      <div class="err" id="confErr" role="alert"></div>
+      <div class="btns"><button class="go" id="confirmBtn" type="button">Confirm my elective</button><button class="ghost" id="backBtn" type="button">Back</button></div>
+    </div>
+  </section>
+
+  <!-- step 4: done -->
+  <section id="e-done" hidden class="narrow">
+    <div class="panel stack el-done">
+      <span class="pill good">You're signed up</span>
+      <div class="el-big" id="doneClass"></div>
+      <p style="margin:0" id="doneWho"></p>
+      <p class="sub">If this is wrong, tell your teacher. They can change it.</p>
+      <button class="ghost small" id="someoneElse" type="button" style="align-self:flex-start">Sign up someone else on this device</button>
+    </div>
+  </section>
+</div>
+<script type="module" src="js/electives.js"></script>
+</body>
+</html>

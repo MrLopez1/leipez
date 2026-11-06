@@ -72,6 +72,30 @@
     "bsecret": {
       ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
       ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')"
+    },
+    "electives": {
+      ".read": "auth != null",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      "$term": {
+        "choices": {
+          "$sid": {
+            ".write": "auth != null && !data.exists() && root.child('electives').child($term).child('config').child('open').val() == true && root.child('electives').child($term).child('roster').child($sid).exists() && newData.child('uid').val() == auth.uid",
+            ".validate": "newData.hasChildren(['cls', 'pool', 'seat', 'uid', 'at']) && newData.child('at').val() == now && newRoot.child('electives').child($term).child('seats').child(newData.child('cls').val()).child(newData.child('pool').val()).child(newData.child('seat').val()).child('sid').val() == $sid && root.child('electives').child($term).child('classes').child(newData.child('cls').val()).child('pools').child(newData.child('pool').val()).child('bands').child(root.child('electives').child($term).child('roster').child($sid).child('band').val()).exists()"
+          }
+        },
+        "seats": {
+          "$cls": {
+            "$pool": {
+              "$seat": {
+                "sid": {
+                  ".write": "auth != null && !data.exists() && data.parent().child('open').val() == true && root.child('electives').child($term).child('config').child('open').val() == true",
+                  ".validate": "newData.isString() && newRoot.child('electives').child($term).child('choices').child(newData.val()).child('cls').val() == $cls && newRoot.child('electives').child($term).child('choices').child(newData.val()).child('pool').val() == $pool && newRoot.child('electives').child($term).child('choices').child(newData.val()).child('seat').val() == $seat"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

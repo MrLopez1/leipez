@@ -100,5 +100,24 @@ The free Firebase plan (Spark) allows about 100 people connected at the same tim
 - `js/player.js`, `js/host.js`: student and teacher pages
 - `js/board.js`: leaderboard and records
 - `js/battle-core.js`, `js/battle-host.js`, `js/battle-player.js`: Coordinate Battleship
+- `electives.html`, `electives-admin.html`, `js/electives*.js`: elective sign-up
 - `js/fb.js`, `js/config.js`: Firebase connection
 - `database.rules.json`: security rules to paste into Firebase
+
+---
+
+## Elective sign-up (separate pages, same site and database)
+- **Students:** `https://YOUR-USERNAME.github.io/math-sprint-league/electives.html`
+- **Teachers:** `https://YOUR-USERNAME.github.io/math-sprint-league/electives-admin.html` (sign in with nahum@rowhn.com or davidt@rowhn.com)
+
+**How students sign up:** they pick their grade, tap their name, see only the electives open to their grade with the seats left, choose one and confirm. Each name can choose only once. When a class (or chess's 4th–6th or 7th–11th half) is full, it shows **Full** and can't be chosen. The database itself refuses extra sign-ups, so two students clicking at the same moment can't go over the limit.
+
+**Setting it up each quarter:**
+1. Edit `js/electives-config.js`: the quarter's id and name, and the classes with their seats and grades (4th–6th = "ms", 7th–11th = "hs").
+2. Open the teacher page and press **Publish classes and seats**.
+3. Paste the student list (one per line: name, grade; you can copy two columns from Excel or Google Sheets) and press **Add students**.
+4. Press **Open sign-ups** and share the student link. Press **Close sign-ups** when you're done.
+
+On the teacher page you can see who is in each class, **Remove** a student (frees the seat), **Place in…** a student who hasn't chosen, add or remove seats with **+ seat / − seat**, delete a student from the list, and **Download list (CSV)**.
+
+Note for the 2nd quarter: 5 classes × 16 seats = 80 seats for 81 students. The teacher page warns you when there aren't enough free seats; use **+ seat** on a class to make room.
