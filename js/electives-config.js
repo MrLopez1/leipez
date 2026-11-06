@@ -30,7 +30,7 @@ export const CLASSES = [
     pools: { all: { cap: 16, bands: ["ms"] } }
   },
   {
-    id: "dance", name: "Honduran Dance and Culture", who: "Middle and high school (4th-11th)",
+    id: "dance", name: "Honduran Dance and Culture", who: "Middle and high school (4th–11th)",
     pools: { all: { cap: 16, bands: ["ms", "hs"] } }
   }
 ];
