@@ -77,7 +77,19 @@
     if (window.__elReady) return;
     var t = e.target;
     if (t && t.tagName === "SCRIPT") {
-      __elShow("A file of this page didn't load" + (t.src ? ": <b>" + t.src.split("/").slice(-2).join("/") + "</b>" : "") + ". Check on GitHub that every file from the zip is there, inside the <b>js</b> and <b>css</b> folders, then reload.");
+      __elShow("Checking which file is missing…");
+      // The browser blames the page's main script when ANY file it needs is missing, so test each one.
+      var V = "https://www.gstatic.com/firebasejs/12.18.0/";
+      var files = ["js/electives-admin.js", "js/electives-config.js", "js/fb.js", "js/ui.js", "js/config.js", V + "firebase-app.js", V + "firebase-auth.js", V + "firebase-database.js"];
+      Promise.all(files.map(function (f) {
+        return fetch(f, { cache: "no-store" }).then(function (r) { return [f, r.ok]; }, function () { return [f, false]; });
+      })).then(function (res) {
+        var bad = res.filter(function (x) { return !x[1]; });
+        var list = res.map(function (x) { return "<li>" + (x[1] ? "✓ " : "<b>✗ ") + x[0].replace(V, "Firebase: ") + (x[1] ? "" : " (missing)</b>") + "</li>"; }).join("");
+        __elShow((bad.length ? "This page can't start because " + (bad.length === 1 ? "a file is" : "some files are") + " missing:" : "Every file loads now. Reload the page.") +
+          "<ul style='margin:8px 0;padding-left:20px'>" + list + "</ul>" +
+          (bad.some(function (x) { return x[0].indexOf(V) === 0; }) ? "Firebase's own files can't be reached from this network. Try another connection." : bad.length ? "On GitHub, the file must have exactly this name (lowercase, same spelling) inside the <b>js</b> folder, which sits next to this page. GitHub can take a minute or two to publish a new upload." : ""));
+      });
     } else if (e.message) {
       __elShow("The page hit an error: <b>" + String(e.message).replace(/</g, "&lt;") + "</b>. This usually means a file on GitHub is an older version. Upload all the files from the latest zip again, then reload.");
     }
