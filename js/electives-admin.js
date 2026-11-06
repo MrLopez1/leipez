@@ -4,7 +4,8 @@ import {
   onValue, get, update, push, serverTimestamp
 } from "./fb.js";
 import { $, esc, normKey, showOnly } from "./ui.js";
-import { TERM, TERM_LABEL, CLASSES, GRADES, bandOf, gradeName, BAND_NAME } from "./electives-config.js";
+// Always load the newest class list, even if the browser has an older copy saved.
+const { TERM, TERM_LABEL, CLASSES, GRADES, bandOf, gradeName, BAND_NAME } = await import("./electives-config.js?v=" + Date.now());
 
 const VIEWS = ["a-setup", "a-loading", "a-signin", "a-denied", "a-main"];
 const ready = () => { window.__elReady = true; };
@@ -121,7 +122,7 @@ $("#publishBtn").addEventListener("click", async () => {
     upd[`classes/${c.id}`] = { name: c.name, who: c.who, order: i, pools };
   });
   if (!data.config) upd.config = { open: false, label: TERM_LABEL };
-  try { await update(r(base), upd); $("#publishNote").textContent = "Classes and seats are up to date."; }
+  try { await update(r(base), upd); $("#publishNote").textContent = `Published ${CLASSES.length} classes: ${CLASSES.map(c => c.name).join(", ")}.`; }
   catch (e) { $("#publishNote").textContent = "Couldn't publish. Check the database rules."; }
 });
 $("#toggleOpen").addEventListener("click", () => update(r(base + "/config"), { open: !(data.config && data.config.open) }));
