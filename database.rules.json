@@ -1,8 +1,8 @@
 {
   "rules": {
     "rooms": {
-      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
       "$code": {
         ".read": "auth != null",
         "players": {
@@ -30,12 +30,12 @@
       }
     },
     "history": {
-      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')"
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')"
     },
     "scores": {
       ".read": "auth != null",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
       ".indexOn": [
         "event",
         "key"
@@ -46,8 +46,8 @@
       }
     },
     "bships": {
-      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
       "$code": {
         "$uid": {
           ".read": "auth != null && auth.uid == $uid",
@@ -57,8 +57,8 @@
       }
     },
     "banswers": {
-      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
       "$code": {
         "$round": {
           "$uid": {
@@ -70,12 +70,12 @@
       }
     },
     "bsecret": {
-      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')"
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')"
     },
     "electives": {
       ".read": "auth != null",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
       "$term": {
         "choices": {
           "$sid": {
@@ -98,8 +98,8 @@
       }
     },
     "fair": {
-      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
-      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com' || auth.token.email == 'vgale@rowhn.com')",
       "$fair": {
         "config": {
           ".read": "auth != null"

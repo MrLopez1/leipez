@@ -109,7 +109,7 @@ The free Firebase plan (Spark) allows about 100 people connected at the same tim
 
 ## Elective sign-up (separate pages, same site and database)
 - **Students:** `https://YOUR-USERNAME.github.io/math-sprint-league/electives.html`
-- **Teachers:** `https://YOUR-USERNAME.github.io/math-sprint-league/electives-admin.html` (sign in with nahum@rowhn.com or davidt@rowhn.com)
+- **Teachers:** `https://YOUR-USERNAME.github.io/math-sprint-league/electives-admin.html` (sign in with nahum@rowhn.com, davidt@rowhn.com or vgale@rowhn.com)
 
 **How students sign up:** they pick their grade, tap their name, see only the electives open to their grade with the seats left, choose one and confirm. Each name can choose only once. When a class (or chess's 4th–6th or 7th–11th half) is full, it shows **Full** and can't be chosen. The database itself refuses extra sign-ups, so two students clicking at the same moment can't go over the limit.
 
@@ -129,7 +129,7 @@ Note for the 2nd quarter: 5 classes × 16 seats = 80 seats for 81 students. The 
 ## Science & STEAM Fair (separate pages, same site and database)
 - **Judges:** `.../fair-judge.html`: each judge picks their name and types their PIN.
 - **Live results (projector):** `.../fair-results.html`: no sign-in, places only (no points), plus judging progress.
-- **Teacher:** `.../fair-admin.html` (sign in with nahum@rowhn.com or davidt@rowhn.com).
+- **Teacher:** `.../fair-admin.html` (sign in with nahum@rowhn.com, davidt@rowhn.com or vgale@rowhn.com).
 
 **Before the fair:**
 1. Publish the latest `database.rules.json` in Firebase (it adds the `fair` section).
