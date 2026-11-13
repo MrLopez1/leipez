@@ -96,6 +96,71 @@
           }
         }
       }
+    },
+    "fair": {
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      ".write": "auth != null && auth.token.email_verified == true && (auth.token.email == 'nahum@rowhn.com' || auth.token.email == 'davidt@rowhn.com')",
+      "$fair": {
+        "config": {
+          ".read": "auth != null"
+        },
+        "projects": {
+          ".read": "auth != null"
+        },
+        "judges": {
+          ".read": "auth != null"
+        },
+        "public": {
+          ".read": "auth != null",
+          ".write": "auth != null && root.child('fair').child($fair).child('sessions').child(auth.uid).child('pin').val() == root.child('fair').child($fair).child('private').child('pins').child(root.child('fair').child($fair).child('sessions').child(auth.uid).child('jid').val()).val()",
+          ".validate": "newData.hasChildren(['at']) && newData.child('at').val() == now"
+        },
+        "sessions": {
+          "$uid": {
+            ".read": "auth != null && auth.uid == $uid",
+            ".write": "auth != null && auth.uid == $uid",
+            ".validate": "newData.hasChildren(['jid', 'pin']) && newData.child('jid').isString() && newData.child('pin').isString() && newData.child('pin').val() == root.child('fair').child($fair).child('private').child('pins').child(newData.child('jid').val()).val()"
+          }
+        },
+        "scores": {
+          ".read": "auth != null && root.child('fair').child($fair).child('sessions').child(auth.uid).child('pin').val() == root.child('fair').child($fair).child('private').child('pins').child(root.child('fair').child($fair).child('sessions').child(auth.uid).child('jid').val()).val()",
+          "$pid": {
+            "$jid": {
+              ".write": "auth != null && root.child('fair').child($fair).child('sessions').child(auth.uid).child('pin').val() == root.child('fair').child($fair).child('private').child('pins').child(root.child('fair').child($fair).child('sessions').child(auth.uid).child('jid').val()).val() && root.child('fair').child($fair).child('sessions').child(auth.uid).child('jid').val() == $jid && root.child('fair').child($fair).child('config').child('open').val() == true && root.child('fair').child($fair).child('projects').child($pid).exists()",
+              ".validate": "newData.hasChildren(['rubric', 'total', 'status', 'at'])",
+              "rubric": {
+                ".validate": "newData.val() == 'sci' || newData.val() == 'inv' || newData.val() == 'rob'"
+              },
+              "total": {
+                ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100"
+              },
+              "status": {
+                ".validate": "newData.val() == 'draft' || newData.val() == 'final'"
+              },
+              "at": {
+                ".validate": "newData.val() == now"
+              },
+              "crit": {
+                "$c": {
+                  ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 20"
+                }
+              },
+              "c1": {
+                ".validate": "newData.isString() && newData.val().length <= 1000"
+              },
+              "c2": {
+                ".validate": "newData.isString() && newData.val().length <= 1000"
+              },
+              "sugg": {
+                ".validate": "newData.isString() && newData.val().length <= 1000"
+              },
+              "$other": {
+                ".validate": false
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

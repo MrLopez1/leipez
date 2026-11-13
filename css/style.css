@@ -300,3 +300,105 @@ details.game summary span{color:var(--muted);font-size:14px}
 .el .statchips .statchip{min-width:96px}
 .el textarea.text{font-size:15px;font-family:var(--body);resize:vertical}
 .el .seg{flex-wrap:wrap}
+
+/* ---------- Science & STEAM Fair ---------- */
+.sf .sf-names{display:flex;flex-wrap:wrap;gap:8px}
+.sf .sf-name{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;font-weight:700;font-size:16px}
+.sf .sf-name:hover{border-color:var(--ink)}
+.sf .sf-name[aria-pressed="true"]{background:var(--hl);border-color:var(--ink);color:var(--hl-ink)}
+.sf .sf-url{font-size:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;word-break:break-all}
+a.ghost{color:inherit;text-decoration:none;display:inline-block}
+/* judge: project list */
+.sf .sf-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.sf .sf-card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px}
+.sf .sf-card:hover{border-color:var(--ink)}
+.sf .sf-num{font-family:var(--display);font-weight:900;font-size:22px;min-width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:var(--surface-2)}
+.sf .sf-card-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sf .sf-card-body b{font-size:16px;word-break:break-word}
+.sf .sf-card-body small{color:var(--muted);font-size:13px}
+.sf .sf-status{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:right;line-height:1.2}
+.sf .sf-status b{font-size:20px;color:var(--ink)}
+.sf .sf-card.draft{border-color:var(--hl);border-width:2px}
+.sf .sf-card.draft .sf-status{color:var(--ink)}
+.sf .sf-card.done{background:var(--good-bg);border-color:var(--good)}
+.sf .sf-card.done .sf-status{color:var(--good)}
+.sf .sf-card.done .sf-num{background:var(--good);color:var(--surface)}
+/* judge: scoring form */
+.sf .sf-form{padding-bottom:96px}
+.sf .sf-crit{background:var(--surface);border:1.5px solid var(--line);border-left:6px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sf .sf-crit.set{border-left-color:var(--pen)}
+.sf .sf-crit-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.sf .sf-crit-head b{font-size:17px}
+.sf .sf-pts{white-space:nowrap;color:var(--muted);font-size:14px}
+.sf .sf-pts b{font-size:22px;color:var(--ink)}
+.sf .sf-levels{display:flex;flex-wrap:wrap;gap:6px}
+.sf .sf-levels button{min-width:46px;height:46px;border:1.5px solid var(--line);background:var(--surface-2);border-radius:10px;font-family:var(--display);font-weight:800;font-size:19px;touch-action:manipulation}
+.sf .sf-levels.named{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.sf .sf-levels.named button{height:auto;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.sf .sf-levels.named small{font-family:var(--body);font-weight:700;font-size:11.5px;line-height:1.15;color:var(--muted)}
+.sf .sf-levels button:hover:not(:disabled){border-color:var(--ink)}
+.sf .sf-levels button[aria-pressed="true"]{background:var(--pen);border-color:var(--pen);color:var(--pen-ink)}
+.sf .sf-levels button[aria-pressed="true"] small{color:var(--pen-ink)}
+@media (max-width:520px){.sf .sf-levels.named small{font-size:10px}.sf .sf-levels.named{gap:4px}}
+.sf .sf-bands{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;font-size:13.5px;color:var(--muted)}
+.sf .sf-bands li{padding:2px 8px;border-radius:6px}
+.sf .sf-bands li.on{background:color-mix(in srgb,var(--pen) 14%,transparent);color:var(--ink);font-weight:700}
+.sf textarea.text{font-size:16px;font-family:var(--body);resize:vertical}
+.sf .sf-bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px max(16px,calc((100vw - 1180px)/2));background:var(--surface);border-top:2px solid var(--ink);padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.sf .sf-bar .num{font-size:34px;line-height:1}
+.sf .sf-bar-mid{flex:1;display:flex;flex-direction:column;font-weight:700;font-size:15px;min-width:0}
+.sf .sf-bar-mid .sub{margin:0;font-size:13px}
+.sf .sf-bar-mid .sub.bad{color:var(--bad);font-weight:700}
+.sf .sf-bar .go{font-size:17px;padding:12px 20px}
+/* results */
+.sf-live{max-width:1600px}
+.sf .sf-dot{width:12px;height:12px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 var(--good);animation:sfpulse 2s infinite}
+.sf .sf-dot.off{background:var(--bad);animation:none}
+@keyframes sfpulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--good) 60%,transparent)}70%{box-shadow:0 0 0 10px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.sf .sf-progress{display:flex;flex-direction:column;gap:12px}
+.sf .sf-progress-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.sf .sf-progress-big{margin:0;font-size:clamp(18px,2.2vw,26px);font-weight:700}
+.sf .sf-progress-big b{font-size:1.5em}
+.sf .sf-meter{display:flex;height:16px;border-radius:9px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.sf .sf-meter i{display:block;height:100%;background:var(--good);transition:width .6s ease}
+.sf .sf-meter i.soft{background:var(--hl)}
+.sf .sf-divs{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start}
+.sf .sf-div{display:flex;flex-direction:column;gap:12px}
+.sf .sf-div-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sf .sf-div-head h2{font-size:21px}
+.sf .sf-rank{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.sf .sf-rank li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:12px;align-items:center;padding:8px 10px;border-radius:12px;border:1.5px solid var(--line)}
+.sf .sf-place{font-family:var(--display);font-weight:900;font-size:20px;text-align:center}
+.sf .sf-rank li.medal{border-color:var(--ink)}
+.sf .sf-rank li.m1{background:var(--hl);color:var(--hl-ink)}
+.sf .sf-rank li.m1 .sf-place{font-size:26px}
+.sf .sf-rank li.m1 small{color:var(--hl-ink);opacity:.8}
+.sf .sf-who{display:flex;flex-direction:column;min-width:0}
+.sf .sf-who b{font-size:17px;word-break:break-word}
+.sf .sf-who small{color:var(--muted);font-size:13.5px}
+.sf .sf-who small.sf-meta{font-size:12px}
+.sf .sf-wait ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.sf .sf-wait li{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:5px 2px;border-bottom:1px dashed var(--line);color:var(--muted);font-size:15px}
+.sf .sf-wait .pill{font-size:12px;padding:1px 10px}
+.sf-live .sf-who b{font-size:clamp(17px,1.3vw,22px)}
+/* teacher */
+.sf .sf-ptbl td{vertical-align:top}
+.sf .sf-in{font-size:15px;padding:7px 9px;min-width:0}
+.sf .sf-ptbl input[data-f="title"]{min-width:180px}
+.sf .sf-ptbl input[data-f="members"]{min-width:200px}
+.sf .sf-ptbl select{min-width:130px}
+.sf .sf-ptbl small{display:block;margin-top:3px;font-size:12px}
+.sf .sf-ptbl tr.warn td{border-bottom:none}
+.sf .sf-ptbl tr.warnrow td{padding-top:0}
+.sf .sf-warn{display:inline-block;background:var(--bad-bg);color:var(--bad);font-weight:700;font-size:13px;border-radius:6px;padding:2px 8px;margin:0 4px 4px 0}
+.sf .sf-pin{font-size:20px;letter-spacing:.12em}
+.sf .sf-srows{display:flex;flex-direction:column}
+.sf .sf-srow{border-bottom:1px solid var(--line)}
+.sf .sf-srow summary{cursor:pointer;display:grid;grid-template-columns:52px minmax(0,1fr) auto 60px;gap:12px;align-items:center;padding:8px 2px;list-style:none}
+.sf .sf-srow summary::-webkit-details-marker{display:none}
+.sf .sf-srow .rank.gold{background:var(--hl);color:var(--hl-ink)}
+.sf .sf-avg{font-size:20px;text-align:right}
+.sf .sf-judgings{display:flex;flex-direction:column;gap:8px;padding:0 0 12px 64px}
+.sf .sf-judging{border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface-2)}
+.sf .sf-judging.old{opacity:.6}
+@media (max-width:620px){.sf .sf-srow summary{grid-template-columns:44px minmax(0,1fr) 52px}.sf .sf-srow summary>.sub{display:none}.sf .sf-judgings{padding-left:0}}

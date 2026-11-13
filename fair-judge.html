@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Science Fair · Judges</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap sf">
+  <header class="top">
+    <div>
+      <p class="brand">Science Fair <span class="hl">Judges</span></p>
+      <p class="sub" id="fairName"></p>
+    </div>
+    <div class="who-tag"><span id="judgeName"></span><button class="ghost small" id="signOutBtn" type="button" hidden>Sign out</button></div>
+  </header>
+
+  <section id="j-setup" hidden class="narrow"><div class="note bad">This site isn't connected to the database yet (js/config.js).</div></section>
+  <section id="j-loading" class="narrow"><p class="sub">Loading…</p></section>
+  <section id="j-msg" hidden class="narrow"><div class="panel stack"><h1 id="msgTitle"></h1><p class="sub" id="msgText"></p></div></section>
+
+  <!-- sign in -->
+  <section id="j-login" hidden class="narrow">
+    <div class="panel stack">
+      <div><h1>Judge sign-in</h1><p class="sub">Choose your name, then type the PIN the fair coordinator gave you.</p></div>
+      <div><span class="label">Your name</span><div class="sf-names" id="judgeList"></div></div>
+      <form id="pinForm" class="stack" style="gap:12px" hidden>
+        <div><label class="label" for="pinIn">PIN for <span id="pinWho"></span></label>
+          <input class="text code-in" id="pinIn" inputmode="numeric" autocomplete="off" maxlength="6" style="max-width:220px"></div>
+        <div class="err" id="pinErr" role="alert"></div>
+        <button class="go" id="pinBtn" type="submit" style="align-self:flex-start">Sign in</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- project list -->
+  <section id="j-list" hidden>
+    <div class="stack">
+      <div class="row" style="justify-content:space-between;align-items:flex-end">
+        <div><h1>Projects to judge</h1><p class="sub" id="listSub"></p></div>
+        <input class="text" id="filter" placeholder="Search number, project or student" autocomplete="off" style="max-width:320px;font-size:16px">
+      </div>
+      <div id="closedNote" class="note bad" hidden>Judging is closed. You can look at your scores but not change them.</div>
+      <div id="flash" class="note" hidden></div>
+      <div id="projList" class="stack"></div>
+    </div>
+  </section>
+
+  <!-- scoring form -->
+  <section id="j-score" hidden>
+    <div class="stack sf-form">
+      <div><button class="ghost small" id="backBtn" type="button">← All projects</button></div>
+      <div class="panel stack" style="gap:8px">
+        <span class="label" id="sDiv"></span>
+        <h1 id="sTitle"></h1>
+        <p style="margin:0" id="sMembers"></p>
+        <p class="sub" id="sRubric"></p>
+      </div>
+      <div id="sNotice" class="note bad" hidden></div>
+      <div id="sCrit" class="stack"></div>
+      <div id="sComments" class="panel stack" hidden></div>
+      <div class="sf-bar" id="sBar">
+        <div><b class="num" id="sTotal">0</b><span> / 100</span></div>
+        <div class="sf-bar-mid"><span id="sLeft"></span><span id="sSave" class="sub"></span></div>
+        <button class="go" id="submitBtn" type="button">Submit score</button>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+/* If the page gets stuck, say why instead of showing "Loading…" forever. */
+(function () {
+  var box = "j-loading";
+  window.__elShow = function (html) { window.__elShown = true; var el = document.getElementById(box); if (el) { el.hidden = false; el.innerHTML = '<div class="note bad">' + html + '</div>'; } };
+  window.addEventListener("error", function (e) {
+    if (window.__elReady) return;
+    var t = e.target;
+    if (t && t.tagName === "SCRIPT") {
+      __elShow("Checking which file is missing…");
+      // The browser blames the page's main script when ANY file it needs is missing, so test each one.
+      var V = "https://www.gstatic.com/firebasejs/12.18.0/";
+      var files = ["js/fair-judge.js", "js/fair-config.js", "js/fair-core.js", "js/fb.js", "js/ui.js", "js/config.js", V + "firebase-app.js", V + "firebase-auth.js", V + "firebase-database.js"];
+      Promise.all(files.map(function (f) {
+        return fetch(f, { cache: "no-store" }).then(function (r) { return [f, r.ok]; }, function () { return [f, false]; });
+      })).then(function (res) {
+        var bad = res.filter(function (x) { return !x[1]; });
+        var list = res.map(function (x) { return "<li>" + (x[1] ? "✓ " : "<b>✗ ") + x[0].replace(V, "Firebase: ") + (x[1] ? "" : " (missing)</b>") + "</li>"; }).join("");
+        __elShow((bad.length ? "This page can't start because " + (bad.length === 1 ? "a file is" : "some files are") + " missing:" : "Every file loads now. Reload the page.") +
+          "<ul style='margin:8px 0;padding-left:20px'>" + list + "</ul>" +
+          (bad.some(function (x) { return x[0].indexOf(V) === 0; }) ? "Firebase's own files can't be reached from this network. Try another connection." : bad.length ? "On GitHub, the file must have exactly this name (lowercase, same spelling) inside the <b>js</b> folder, which sits next to this page. GitHub can take a minute or two to publish a new upload." : ""));
+      });
+    } else if (e.message) {
+      __elShow("The page hit an error: <b>" + String(e.message).replace(/</g, "&lt;") + "</b>. This usually means a file on GitHub is an older version. Upload all the files from the latest zip again, then reload.");
+    }
+  }, true);
+  setTimeout(function () {
+    if (!window.__elReady && !window.__elShown) __elShow("Still not loaded after 20 seconds. Check the internet connection and that <b>js/config.js</b> on GitHub has your Firebase settings (including <b>databaseURL</b>), then reload.");
+  }, 20000);
+})();
+</script>
+<script type="module" src="js/fair-judge.js"></script>
+</body>
+</html>

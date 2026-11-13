@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Science Fair · Teacher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap sf">
+  <header class="top">
+    <div>
+      <p class="brand">Science Fair <span class="hl">Teacher</span></p>
+      <p class="sub" id="fairName"></p>
+    </div>
+    <div class="who-tag"><span id="whoEmail"></span><button class="ghost small" id="signOutBtn" type="button" hidden>Sign out</button></div>
+  </header>
+
+  <section id="a-setup" hidden class="narrow"><div class="note bad">This site isn't connected to Firebase yet (js/config.js).</div></section>
+  <section id="a-loading"><p class="sub">Connecting…</p></section>
+  <section id="a-signin" hidden class="narrow">
+    <div class="panel stack">
+      <h1>Teacher sign-in</h1>
+      <p class="sub">Sign in with a teacher Google account listed in the database rules.</p>
+      <button class="go full" id="googleBtn" type="button">Sign in with Google</button>
+      <div class="err" id="signinErr"></div>
+    </div>
+  </section>
+  <section id="a-denied" hidden class="narrow"><div class="note bad">This Google account (<span id="deniedEmail"></span>) can't manage the fair. Sign in with a teacher account.</div></section>
+
+  <section id="a-main" hidden>
+    <div class="stack">
+      <div class="grid2">
+        <div class="panel stack">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <div><span class="label">Judging</span><h2 id="openState"></h2></div>
+          <div class="btns"><button class="go" id="toggleOpen" type="button"></button></div>
+        </div>
+        <div class="statchips" id="stats"></div>
+        <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+          <div><span class="label">Link for judges</span><div class="row" style="gap:8px;align-items:center"><code class="sf-url" id="judgeUrl"></code><button class="ghost small" data-copy="judgeUrl" type="button">Copy</button></div></div>
+          <div><span class="label">Live results (projector)</span><div class="row" style="gap:8px;align-items:center"><code class="sf-url" id="resultsUrl"></code><button class="ghost small" data-copy="resultsUrl" type="button">Copy</button><a class="ghost small" id="resultsOpen" target="_blank" rel="noopener">Open</a></div></div>
+        </div>
+        <div class="btns"><button class="ghost" id="csvBtn" type="button">Download all scores (CSV)</button><span class="sub" id="topNote"></span></div>
+      </div>
+
+        <div class="panel stack">
+          <div><h2>Judges</h2><p class="sub">Each judge signs in with their name and PIN. A new PIN signs that judge out on every device.</p></div>
+          <form class="row" id="judgeForm" style="gap:8px;align-items:center"><input class="text" id="judgeIn" placeholder="Judge's name" maxlength="40" style="flex:1;min-width:160px;font-size:16px"><button class="go" type="submit" style="font-size:16px;padding:10px 18px">Add judge</button></form>
+          <div class="tbl" id="judgeTbl"></div>
+        </div>
+      </div>
+      <div class="panel stack">
+          <div class="row" style="justify-content:space-between;align-items:flex-end">
+            <div><h2>Projects</h2><p class="sub">Changes save when you leave a box. Moving a project to another category or division moves it on the results page too.</p></div>
+            <div class="btns"><button class="ghost" id="addProj" type="button">+ Add project</button></div>
+          </div>
+          <div id="seedBox" class="note" hidden>No projects yet. <button class="go" id="seedBtn" type="button" style="margin-left:8px;font-size:16px;padding:8px 16px">Load the projects from the list</button></div>
+          <div id="projWarn"></div>
+          <div class="tbl" id="projTbl"></div>
+        </div>
+      <div class="panel stack">
+        <div><h2>Scores and ranking</h2><p class="sub">The place uses the average of the submitted scores. Drafts don't count until the judge submits them. Click a project to see each judge's score and comments.</p></div>
+        <div id="scoreDivs" class="stack"></div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+/* If the page gets stuck, say why instead of showing "Loading…" forever. */
+(function () {
+  var box = "a-loading";
+  window.__elShow = function (html) { window.__elShown = true; var el = document.getElementById(box); if (el) { el.hidden = false; el.innerHTML = '<div class="note bad">' + html + '</div>'; } };
+  window.addEventListener("error", function (e) {
+    if (window.__elReady) return;
+    var t = e.target;
+    if (t && t.tagName === "SCRIPT") {
+      __elShow("Checking which file is missing…");
+      // The browser blames the page's main script when ANY file it needs is missing, so test each one.
+      var V = "https://www.gstatic.com/firebasejs/12.18.0/";
+      var files = ["js/fair-admin.js", "js/fair-seed.js", "js/fair-config.js", "js/fair-core.js", "js/fb.js", "js/ui.js", "js/config.js", V + "firebase-app.js", V + "firebase-auth.js", V + "firebase-database.js"];
+      Promise.all(files.map(function (f) {
+        return fetch(f, { cache: "no-store" }).then(function (r) { return [f, r.ok]; }, function () { return [f, false]; });
+      })).then(function (res) {
+        var bad = res.filter(function (x) { return !x[1]; });
+        var list = res.map(function (x) { return "<li>" + (x[1] ? "✓ " : "<b>✗ ") + x[0].replace(V, "Firebase: ") + (x[1] ? "" : " (missing)</b>") + "</li>"; }).join("");
+        __elShow((bad.length ? "This page can't start because " + (bad.length === 1 ? "a file is" : "some files are") + " missing:" : "Every file loads now. Reload the page.") +
+          "<ul style='margin:8px 0;padding-left:20px'>" + list + "</ul>" +
+          (bad.some(function (x) { return x[0].indexOf(V) === 0; }) ? "Firebase's own files can't be reached from this network. Try another connection." : bad.length ? "On GitHub, the file must have exactly this name (lowercase, same spelling) inside the <b>js</b> folder, which sits next to this page. GitHub can take a minute or two to publish a new upload." : ""));
+      });
+    } else if (e.message) {
+      __elShow("The page hit an error: <b>" + String(e.message).replace(/</g, "&lt;") + "</b>. This usually means a file on GitHub is an older version. Upload all the files from the latest zip again, then reload.");
+    }
+  }, true);
+  setTimeout(function () {
+    if (!window.__elReady && !window.__elShown) __elShow("Still not loaded after 20 seconds. Check the internet connection and that <b>js/config.js</b> on GitHub has your Firebase settings (including <b>databaseURL</b>), then reload.");
+  }, 20000);
+})();
+</script>
+<script type="module" src="js/fair-admin.js"></script>
+</body>
+</html>

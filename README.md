@@ -101,6 +101,7 @@ The free Firebase plan (Spark) allows about 100 people connected at the same tim
 - `js/board.js`: leaderboard and records
 - `js/battle-core.js`, `js/battle-host.js`, `js/battle-player.js`: Coordinate Battleship
 - `electives.html`, `electives-admin.html`, `js/electives*.js`: elective sign-up
+- `fair-judge.html`, `fair-results.html`, `fair-admin.html`, `js/fair-*.js`: Science & STEAM Fair
 - `js/fb.js`, `js/config.js`: Firebase connection
 - `database.rules.json`: security rules to paste into Firebase
 
@@ -121,3 +122,25 @@ The free Firebase plan (Spark) allows about 100 people connected at the same tim
 On the teacher page you can see who is in each class, **Remove** a student (frees the seat), **Place in…** a student who hasn't chosen, add or remove seats with **+ seat / − seat**, delete a student from the list, and **Download list (CSV)**.
 
 Note for the 2nd quarter: 5 classes × 16 seats = 80 seats for 81 students. The teacher page warns you when there aren't enough free seats; use **+ seat** on a class to make room.
+
+
+---
+
+## Science & STEAM Fair (separate pages, same site and database)
+- **Judges:** `.../fair-judge.html`: each judge picks their name and types their PIN.
+- **Live results (projector):** `.../fair-results.html`: no sign-in, places only (no points), plus judging progress.
+- **Teacher:** `.../fair-admin.html` (sign in with nahum@rowhn.com or davidt@rowhn.com).
+
+**Before the fair:**
+1. Publish the latest `database.rules.json` in Firebase (it adds the `fair` section).
+2. On the teacher page, press **Load the projects from the list**, then fix each project: name, students, category (A, B, STEAM or Not judged), STEAM type (Invention & Innovation or Robotics) and division. Rows in red still need something.
+3. Add the judges. Each gets a 4-digit PIN; give each judge their PIN and the judges' link.
+4. Press **Open judging**.
+
+**Rubrics:** Category A and B use the ABSH Science Fair Rubric (5 levels per criterion, two positive comments and one suggestion). STEAM projects use the Invention and Innovation rubric or the Robotics rubric from the addendum. All three total 100. They live in `js/fair-config.js`.
+
+**Ranking:** Category A by grade (7th–11th); Category B by 7th–9th and 10th–11th; STEAM by 7th–9th and 10th–11th (inventions and robotics together). A project's place uses the average of its submitted scores. Drafts don't count. Ties share a place.
+
+**During the fair:** judges' drafts save as they score, so they can leave a project and come back. **Submit** becomes available once every criterion has a score, and judges can still change a submitted score while judging is open. You can move a project to another category or division at any time. If the move changes its rubric, its old scores stop counting and the judges score it again. **New PIN** signs a judge out everywhere. **Close judging** locks every score. **Download all scores (CSV)** gives every judge's criteria, totals and comments.
+
+**Next year:** change `FAIR` in `js/fair-config.js` (for example to "2027-28") to start a fair with no projects or scores. The old fair stays in the database.
